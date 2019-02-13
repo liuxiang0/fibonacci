@@ -61,6 +61,7 @@ def fibo_lambda(n):
     __f = lambda n, x=0, y=1: x if not n else __f(n-1, y, x+y)
     return (__f(n))
 
+
 if __name__ == '__main__':
     # 主要的区别就是利用了Python提供的默认参数和三元操作符，从而把代码简化至一行
     # 一条语句搞定：fib = lambda n, x=0, y=1: x if not n else fib(n-1, y, x+y)
