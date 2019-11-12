@@ -1,5 +1,7 @@
 # Fibonacci Number（斐波那契数列）
+
   用Python实现，采用递归、迭代、三元操作符、逻辑运算多种方法，得到斐波那契数列
+  
 ## **递归方法：fibo_recursive**
     """
     # fibo_recursive(n): 要求很简单，输入n，输出第n个Fibonacci数，n为正整数。
