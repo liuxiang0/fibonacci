@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding = utf-8 -*-
-"""Fibonacci:用Python实现，递归、迭代多种方法体现
+"""
+Fibonacci: 最经典算法，用Python实现，递归、迭代多种方法体现
 下面给出了多种实现fibonacci（n）的方法，全部是用Python语句实现，在Python3.6.4测试通过：
 """
 
@@ -67,12 +68,12 @@ if __name__ == '__main__':
     # 一条语句搞定：fib = lambda n, x=0, y=1: x if not n else fib(n-1, y, x+y)
     # 测试多种方法得到的 Fibonacci数，给定序列数n，得到第n个Fibonacci数。测试通过OK
 
-    for i in range(15):
-        print("Recursive=", fibo_recursive(i), "While=", fibo_while(i),
-              "Logical=", fibo_logical(i), "Iteral=", fibo_iteral(i),
-              "Lambda=", fibo_lambda(i))
+    for i in range(30):
+        print("{i}：Recursive={R} While={W} Logical={L} Iteral={T} Lambda={A}".format(i=i+1,
+            R=fibo_recursive(i), W=fibo_while(i), L=fibo_logical(i), T=fibo_iteral(i), A=fibo_lambda(i)))
     '''
     for i in range(15):
         print("Index=", i, "Recursive=", fibo_recursive(i),
               "While=", fibo_while(i), "Logical=", fibo_logical(i),
-              "Iteral=", fibo_iteral(i), "Lambda=", fibo_lambda(i))'''
+              "Iteral=", fibo_iteral(i), "Lambda=", fibo_lambda(i))
+    '''
