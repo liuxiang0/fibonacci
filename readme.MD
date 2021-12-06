@@ -2,15 +2,16 @@
 
   用Python实现，采用递归、迭代、三元操作符、逻辑运算多种方法，得到斐波那契数列
 
-## Fibonacci Day
-1, 1, 2, 3: It's Fibonacci Day!
-Today's date, November 23, can be represented as 11/23, or 1,1,2,3—a Fibonacci sequence of numbers. Likewise, as the leaves on the Queen Victoria agave in today's image spiral out from the center, they also express the Fibonacci sequence. This unique sequence of numbers was introduced to Europe in 1202 by the Italian mathematician Leonardo of Pisa (posthumously named Fibonacci) in his revolutionary work the 'Liber Abaci.' The book begins by describing the Hindu-Arabic numeral system or 'Modus Indorum’—0 1 2 3 4 5 6 7 8 9—showing how their application could simplify trade and make calculations faster and easier (most of Europe at this time used Roman numerals).
+## Fibonacci Day (斐波那契日11月23日)
 
-In the third section of his book, Fibonacci goes on to describe various mathematical problems including a thought experiment about increasing rabbit populations, which results in a Fibonacci sequence. The sequence is determined by adding the previous two numbers together to determine the next number: 1, 1, 2, 3, 5, 8, 13, 21, 34, etc. Since then, mathematicians, scientists, and artists have been studying and applying the Fibonacci sequence and the Fibonacci numbers that make it up. While Fibonacci gets the credit for this work, he wasn't the first to discover it. Research published in 1985 posits that ancient Indian mathematicians had been aware of and written about the sequence for more than a century before Fibonacci's work.
+11月23日（11/23)就是著名的**斐波那契日**, 代表了 斐波那契数列前4项 \{1,1,2,3\}。
+
+这个独特的数字序列是1202年由意大利数学家比萨的莱昂纳多（死后被称为斐波纳契）在其革命性的作品《Liber Abaci》中介绍到了欧洲。这本书开篇就描述了印度-阿拉伯数字系统或 "印度模式"-`0 1 2 3 4 5 6 7 8 9`，说明它们的应用可以简化贸易，使计算更快、更容易（这时欧洲大部分地区使用罗马数字）。
+
+在该书的第三部分，斐波那契继续描述各种数学问题，包括一个关于兔子数量增加的实验，结果就是斐波那契数列。这个序列是通过将前两个数字相加来确定下一个数字：1、1、2、3、5、8、13、21、34，等等。从那时起，数学家、科学家和艺术家一直在研究和应用斐波那契数列和构成它的斐波那契数字。虽然斐波纳契得到了这项工作的荣誉，但他并不是第一个发现这项工作的人。1985年发表的研究报告认为，在斐波纳契工作之前的一个多世纪，古印度数学家就已经意识到并写下了这个序列。
 
 ## **递归方法：fibo_recursive**
  
-
     # fibo_recursive(n): 要求很简单，输入n，输出第n个Fibonacci数，n为正整数。
     # algorithm: 递归算法recursive，耗资源比较大
 
@@ -34,4 +35,11 @@ In the third section of his book, Fibonacci goes on to describe various mathemat
 
     # fibo_lambda(n): 最精简的一条语句定义递归函数，三元操作符和递归结合。
     # using lambda and bool variable
+
+## **矩阵方法**
+
+定义矩阵 $M = \begin{pmatrix} 1 & 1\\1 & 0 \end{pmatrix}$
+
+\(\begin{pmatrix} F_n \\ F_{n-1}\end{pmatrix}= M^{n-1} \begin{pmatrix} F_1 \\ F_0\end{pmatrix}\)
+
 
