@@ -1,6 +1,36 @@
-# Fibonacci Number（斐波那契数列）
+# 斐波那契数列 Fibonacci Numbers
 
-  用Python实现，采用递归、迭代、三元操作符、逻辑运算多种方法，得到斐波那契数列
+**Fibonacci 数列**定义为：
+$F_0=0, F_1=1, F_{n}=F_{n-1}+F_{n-2}; n\geq 2, n\in \mathbb{N}^+$  
+
+~~~python
+>>> from sympy import fibonacci
+>>> prev10 = [fibonacci(n) for n in range(10)]
+>>> prev10
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+~~~
+
+很显然，斐波那契数列都是自然数，但是却可以用公式表示每一项：  
+$F_n = \dfrac{1}{\sqrt5}\left((\dfrac{1+\sqrt5}{2})^n - (\dfrac{1-\sqrt5}{2})^n\right)$
+
+$F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还可以扩充为实数和复数。此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比（`S.GoldenRatio`）
+
+~~~python
+>>> from sympy import sqrt, cos
+>>> from sympy.abc import x,y,z
+>>> phi = (sqrt(5)+1)/2
+>>> p = (phi**z-cos(pi*z)*phi**(-z))/sqrt(5)
+>>> fib = [p.subs({z:n}).simplify() for n in range(11)]
+>>> fib
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+~~~
+
+用Python实现，采用递归、迭代、三元操作符、逻辑运算多种方法，得到斐波那契数列
+
+## 斐波那契多项式 Fibonacci Polynomials
+
+定义：$F_1(z) = 1, F_2(z) = z, F_n(z) = z*F_{n-1}(z) + F_{n-2}(z); \forall n > 2, n \in \mathbb{N}^+, F_n(1) = F_n, z\in \mathbb{C}$.
+
 
 ## Fibonacci Day (斐波那契日11月23日)
 
@@ -41,5 +71,3 @@
 定义矩阵 $M = \begin{pmatrix} 1 & 1\\1 & 0 \end{pmatrix}$
 
 \(\begin{pmatrix} F_n \\ F_{n-1}\end{pmatrix}= M^{n-1} \begin{pmatrix} F_1 \\ F_0\end{pmatrix}\)
-
-

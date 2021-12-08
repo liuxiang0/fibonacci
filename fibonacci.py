@@ -2,7 +2,10 @@
 # -*- coding = utf-8 -*-
 """
 Fibonacci: 最经典算法，用Python实现，递归、迭代多种方法体现
-下面给出了多种实现fibonacci（n）的方法，全部是用Python语句实现，在Python3.6.4测试通过：
+下面给出了多种实现fibonacci（n）的方法，全部是用Python语句实现，在Python3.6.4测试通过。
+Author: Liu Xiang
+Email : liuxiangxyd@163.com
+
 """
 
 class Fibonacci(object):
