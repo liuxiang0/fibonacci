@@ -70,36 +70,28 @@ class Fibonacci(object):
         __f = lambda n, x=self._first, y=self._second : x if not n else __f(n-1, y, x+y)
         return (__f(n))
 
-    def fwhile(self, n):
-        """
-        # fwhile(n): 非常简单的while循环方法，充分利用Python的三元操作符。
-        # simple swap method: a, b, n = b, a+b, n-1
-        """
-        assert n > 1, '给定数必须大于1。'
 
-        a, b = self._first, self._second
-        yield a
-        while (n):
-            a, b, n = b, a+b, n-1
-            yield a
-
-
-def fibo_logical(n):
+def fib_while(n):
+    """推荐该算法
+    # fib_while(n): 非常简单的while循环方法，充分利用Python的三元操作符。
+    # simple swap method: a, b, n = b, a+b, n-1
+    # 测试 500 以上没有问题。其它递归肯定慢。
     """
-    # fibo_logical(n): 递归迭代配合bool操作。
-    # True = 1, False = 0, verify int(True) == 1, int(False) == 0
-    """
-    if n == 0:
-        return 0
-    else:
-        return int(1 and n < 2) or fibo_logical(n-1) + fibo_logical(n-2)
-
+    assert n >= 0, 'n为自然数'
+    a, b = 0, 1
+    if n==0:
+        return n   #yield a  # 第一个为 0
+    while (n):
+        a, b, n = b, a+b, n-1
+        #yield a
+    return a
 
 def fibo_iteral(n):
-    """
-    # fibo_iteral(n): 定义递归‘迭代’函数。
+    """推荐该算法，等同于 fib_while(n)
+    # fibo_iteral(n): 递归迭代函数。
     # using iterating method
     """
+    assert n >= 0, 'n为自然数'
     def fibo_iter(n, x, y):
         if n == 0:
             return x
@@ -110,12 +102,51 @@ def fibo_iteral(n):
 
 
 def fibo_lambda(n):
-    """
+    """推荐该算法，等同于 fibo_while(n)
     # fibo_lambda(n): 最精简的一条语句定义递归函数，三元操作符和递归结合。
     # using lambda and bool variable
+    # 等价于一条语句 fib = lambda n, x=0, y=1: x if not n else fib(n-1,y,x+y)
     """
+    assert n >= 0, 'n为自然数'
     __f = lambda n, x=0, y=1: x if not n else __f(n-1, y, x+y)
     return (__f(n))
+
+
+
+def fibo_logical(n):
+    """
+    # fibo_logical(n): 递归迭代配合bool操作。
+    # True = 1, False = 0, verify int(True) == 1, int(False) == 0
+    # 不推荐
+    """
+    if n == 0:
+        return 0
+    else:
+        return int(1 and n < 2) or fibo_logical(n-1) + fibo_logical(n-2)
+
+
+def fibo_matrix(n):
+    """矩阵方法: [f_n f_{n-1}] = [f_{n-1} f_{n-2}]*M =...
+    = [f_1,f_0]*M^{n-1} , M=matrix[[1,1],[1,0]]
+    Using numpy.dot(A,B)
+    局限: n大于46，即出现溢出，得到负数；
+    不推荐该算法。
+    """
+    import numpy as np
+
+    M = [[1,1],[1,0]]
+    E = [[1,0],[0,1]]
+    F = [[1],[0]]
+
+    assert n >= 0, 'n为自然数'
+    if (n==0 or n==1):
+        return n
+    for _ in range(n-1):
+        E = np.dot(E, M)
+    #print(E)
+    S = np.dot(E,F)
+    return S[0][0]
+    
 
 
 if __name__ == '__main__':
@@ -123,14 +154,19 @@ if __name__ == '__main__':
     # 一条语句搞定：fib = lambda n, x=0, y=1: x if not n else fib(n-1, y, x+y)
     # 测试多种方法得到的 Fibonacci数，给定序列数n，得到第n个Fibonacci数。测试通过OK
 
-    fib = Fibonacci()
-    fib = fib.fwhile(4)
-    #print(fib.first,fib.second)
+    fib = 1
+    num = 500
+    while num < 520 and fib >0:
+        fib = fibo_lambda(num)  #fibo_matrix(num)
+        print(num, fib)
+        num += 1
 
+    '''fib = Fibonacci()
+    fib = fib.fwhile(4)
     for f in fib:
         print(f)
 
-    '''for i in range(15,30):
+    for i in range(15,30):
         print("{i}：Recursive={R} While={W} Logical={L} Iteral={T} Lambda={A}".format(i=i+1,
             R=fibo_recursive(i), W=fibo_while(i), L=fibo_logical(i), T=fibo_iteral(i), A=fibo_lambda(i)))
     
