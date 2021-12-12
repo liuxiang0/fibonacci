@@ -30,15 +30,10 @@ class FibNum(object):
         if self.curpos <= self.num:
             self.a, self.b = self.b, self.a + self.b
             self.curpos += 1
-            return fib  #self.a
+            return fib
         else:
             raise StopIteration
     
-    #类方法，只能是类属性，不能使用实例属性，必须使用类的对象作为第一个参数
-    @classmethod
-    def list(cls):
-        return list(cls)
-
 
 if __name__ == '__main__':
     # 主要的区别就是利用了Python提供的默认参数和三元操作符，从而把代码简化至一行
@@ -48,5 +43,5 @@ if __name__ == '__main__':
     fib = FibNum(35)
     print(type(fib), list(fib))
     
-    for f in fib:  # 为什么做了list后，fib变成了空集？
-        print(f)
+    for f in list(fib):  # 为什么做了list后，fib变成了空集？
+        print(len(fib), f)

@@ -26,16 +26,11 @@ class FibMax(object):
     def __next__(self):
         '''迭代器中得到下一个 Fibonacci 数'''
         first = self.a  # 为了不漏掉第一个 0
-        if first <= self.max: # <= 
+        if first <= self.max:
             self.a, self.b = self.b, self.a + self.b
-            return first  # self.a
+            return first
         else:
             raise StopIteration
-
-    #类方法，只能是类属性，不能使用实例属性，必须使用类的对象作为第一个参数
-    @classmethod
-    def list(cls):
-        return list(cls)
 
 
 if __name__ == '__main__':
