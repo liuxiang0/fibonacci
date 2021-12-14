@@ -1,10 +1,11 @@
 # 斐波那契数列 Fibonacci Numbers
 
-many ways to get the fibonacci number with given index
-(得到斐波那契数列)
+本文介绍了多种方式得到斐波那契数列或斐波那契数。斐波那契数列也称为“兔子数列”。来源于兔子生产的预测。
 
 **Fibonacci 数列**定义为：
 $F_0=0, F_1=1, F_{n}=F_{n-1}+F_{n-2}; n\geq 2, n\in \mathbb{N}^+$  
+
+下面这段代码就是Python 的SymPy库中提供的Fibonacci类 `fibonacci(n, Sym=None)`   
 
 ~~~python
 >>> from sympy import fibonacci
@@ -14,9 +15,11 @@ $F_0=0, F_1=1, F_{n}=F_{n-1}+F_{n-2}; n\geq 2, n\in \mathbb{N}^+$
 ~~~
 
 很显然，斐波那契数列都是自然数，但是却可以用公式表示每一项：  
-$F_n = \dfrac{1}{\sqrt5}\left((\dfrac{1+\sqrt5}{2})^n - (\dfrac{1-\sqrt5}{2})^n\right)$
+$F_n = \dfrac{1}{\sqrt5}\left((\dfrac{1+\sqrt5}{2})^n - (\dfrac{1-\sqrt5}{2})^n\right),$ 简写为   
+$F_n=\frac{1}{\sqrt5}(\phi^n-(-\phi^{-1})^n)$
 
-$F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还可以扩充为实数和复数。此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比（`S.GoldenRatio`）
+$F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还可以扩充为实数和复数。   
+此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比（`S.GoldenRatio`）
 
 ~~~python
 >>> from sympy import sqrt, cos
@@ -32,9 +35,11 @@ $F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还�
 
 ## 斐波那契多项式 Fibonacci Polynomials
 
-定义：$F_1(z) = 1, F_2(z) = z, F_n(z) = z*F_{n-1}(z) + F_{n-2}(z); \forall n > 2, n \in \mathbb{N}^+, F_n(1) = F_n, z\in \mathbb{C}$.
+定义：$F_1(z) = 1, F_2(z) = z,$    
+$F_n(z) = z*F_{n-1}(z) + F_{n-2}(z);$  
+$\forall n > 2, n \in \mathbb{N}^+, F_n(1) = F_n, z\in \mathbb{C}$.
 
-
+ 
 ## Fibonacci Day (斐波那契日11月23日)
 
 11月23日（11/23)就是著名的**斐波那契日**, 代表了 斐波那契数列前4项 \{1,1,2,3\}。
@@ -74,3 +79,8 @@ $F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还�
 定义矩阵 $M = \begin{pmatrix} 1 & 1\\1 & 0 \end{pmatrix}$
 
 \(\begin{pmatrix} F_n \\ F_{n-1}\end{pmatrix}= M^{n-1} \begin{pmatrix} F_1 \\ F_0\end{pmatrix}\)
+
+初始值 $F_1=1,F_0 =0$
+
+该方法还可以用到幂函数的快速算法求 $M_n$
+

@@ -16,6 +16,7 @@ class FibMax(object):
         :param max: int, 不超过max
         '''
         self.max = max
+        self.curpos= 0
 
     def __iter__(self):
         '''头两个缺省初值为 0, 1, 返回自己'''
@@ -28,6 +29,7 @@ class FibMax(object):
         first = self.a  # 为了不漏掉第一个 0
         if first <= self.max:
             self.a, self.b = self.b, self.a + self.b
+            self.curpos += 1
             return first
         else:
             raise StopIteration
