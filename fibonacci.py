@@ -105,7 +105,7 @@ def fibo_yield(n, a=0, b=1):
     """强烈推荐该算法: 不含递归的最佳生成器算法。
     利用yield生成器方法: 生成 0...n 个Fibonacci数(共 n+1 个，含第0个)
     :param n: 序列最大值
-    :param a, b: 第 1, 2 个 Fibonacci数, 缺省为 0,1
+    :param a, b: 第 0,1 个 Fibonacci数, 缺省为 0,1
     """
     assert n >= 0, 'n为自然数'
     a, b = a, b
@@ -162,29 +162,42 @@ def fibo_logical(n):
         return int(1 and n < 2) or fibo_logical(n-1) + fibo_logical(n-2)
 
 
-def fibo_matrix(n):
+def fibo_matrix_bakcup(n):
     """矩阵方法: [f_n f_{n-1}] = [f_{n-1} f_{n-2}]*M =...
     = [f_1,f_0]*M^{n-1} , M=matrix[[1,1],[1,0]]
     Using numpy.dot(A,B)，也可以用 pow(M,n)=M^n
-    局限: n 大于 46，即出现溢出，得到负数；
-    不推荐该算法。
+    TODO: 如何改成符号运算，使之针对大数n不会溢出？
     """
 
     def mat_pow(n):
         '''numpy 中实现矩阵乘法是 O(log n)'''
-        T = np.matrix("1 1;1 0")
-        return pow(T,n)
+        T = np.matrix("1 1;1 0", dtype='int64')
+        return np.linalg.matrix_power(T, n)
+        #pow(T, n) 当 n > 46 时，溢出
 
     assert n >= 0, 'n为自然数'
     if (n==0 or n==1):
         return n
     # fib list codes: 返回所有Fib数列
-    # res = []
-    # for i in range(n-1):
-    #     res.append(np.array(mat_pow(i))[0][0])
-    # return res
-    return np.array(mat_pow(n-1))[0][0]
+    res = []
+    for i in range(n-1):
+        res.append(np.array(mat_pow(i))[0][0])
+    return res
+    #return np.array(mat_pow(n-1))[0][0]
     
+
+def fibo_matrix(n):
+    '''矩阵方法: 
+    [f_n f_{n-1}].T = M*[f_{n-1} f_{n-2}].T =...
+    = M^{n-1}*[f_1,f_0].T, M = matrix[[1,1],[1,0]]
+    f_n = M^{n-1}[0,0]
+    '''
+    from sympy import Pow, Matrix
+
+    assert n >= 0, 'n为自然数'
+    if (n==0 or n==1): return n
+    return Pow(Matrix(2,2,[1,1,1,0]), n-1)[0,0]
+
 
 def fibo_between(min=0, max=np.inf, step=1):
     """闭区间[min,max]内的Fibonacci数，间隔为 step"""
@@ -204,25 +217,61 @@ def fibo_between(min=0, max=np.inf, step=1):
     return _fib
 
 
+def fibo_perfect(max):
+    """Fibonacci Numbers with index == digit sum
+    找出斐波那契数，满足数位之和==序数，如
+    [0, 1, 5, 10, 31, 35, 62, 72, 175, 180, 216, 251, 252, 360, 494, 504, 540, 946, 1188, 2222](http://oeis.org/A020995)
+    [0, 0], [1, 1], [5, 5], [10, 55], [31, 1346269], [35, 9227465], [62, 4052739537881], [72, 498454011879264]    
+    """
+    res = []
+    
+    for n in range(max):
+        fib = fibo_number(n)
+        if n == sum([int(s) for s in str(fib)]): 
+            res.append([n, fib])
+
+    return res
+
+
+def quick_pow(x, n):
+    """快速幂算法"""
+    if n == 0: return 1
+    t = 1
+    while (n != 0):
+        if (n & 1): t *= x  #奇数乘以x
+        n >>= 1
+        x *= x
+  
+    return t
+
+
+def digitsum(n):
+    #求数位之和, 可以写成一条语句
+    s = str(n)
+    sa = 0
+    for a in s:
+        sa += int(a)
+    return sa
+
 
 if __name__ == '__main__':
     # 测试多种方法得到的 Fibonacci数，给定序列数n，得到第n个Fibonacci数。测试通过OK
     
-    num = 10
-    fib = fibo_yield(num)
-    print(list(fib))
+    num = 1000
+    # fibList = quick_pow(2, num)
+    # print(fibList)
 
-    '''for i in range(num-10, num):
-        print(i, fibo_index(num),  fibo_number(num)) 
+    # for i in range(num-10, num):
+    #     print(i, fibo_index(num),  fibo_number(num)) 
     
     
-    fib = Fibonacci(num, False)
-    print(list(fib))
-    while num < 50 and fib >0:
-        fib = fibo_matrix(num)
-        print(num, fib)
-        num += 1
+    # fib = Fibonacci(num, False)
+    # print(list(fib))
+    #fib = fibo_matrix(num)
+    fib = fibo_SPow(num)
+    print(num, fib, fibo_number(num))
 
+    '''
     fib = Fibonacci()
     fib = fibo.fwhile(4)
     for f in fib:
