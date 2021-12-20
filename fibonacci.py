@@ -8,7 +8,9 @@ Author: Liu Xiang
 Email : liuxiangxyd@163.com
 """
 
-import numpy as np  # 矩阵运算需要其中的Matrix类
+import numpy as np
+from sympy.core import GoldenRatio  # 矩阵运算需要其中的Matrix类
+from sympy import log, S
 
 
 class Fibase(object):
@@ -123,6 +125,26 @@ def fibo_index(n):
     return ((Pow(phi, n) - Pow((-1/phi),n))/sqrt(5)).simplify()  #int()
      
 
+def fibo_digits(n):
+    """返回第n个Fibonacci数的位数"""
+    return 1 + int(n*log(S.GoldenRatio, 10) - log(5, 10)/2)
+
+def fibo_near(Num):
+    """返回不超过给定数，最接近给定数的Fibonacci数和序号"""
+    nearn = int((log(5)/2+log(Num))/log(S.GoldenRatio)) 
+    return nearn, fibo_number(nearn)
+
+
+# The following algorithms bases on recursive
+def fibo_next(n):
+    """不用加法，而改用乘法的递归算法:
+       f(n+1) = round (f(n)*S.GoldenRatio), n>2, f(2)=1
+    """
+    assert n >= 0, 'n为自然数'
+    if n in (0, 1): return n
+    if n == 2: return n-1
+    return round(fibo_next(n-1)*S.GoldenRatio)
+
 
 def fibo_iteral(n, a=0, b=1):
     """不推荐该递归算法，n=1000时，RecursionError: maximum recursion depth exceeded
@@ -148,7 +170,6 @@ def fibo_lambda(n, a=0, b=1):
     assert n >= 0, 'n为自然数'
     __f = lambda n, x=a, y=b: x if not n else __f(n-1, y, x+y)
     return (__f(n))
-
 
 
 def fibo_logical(n):
@@ -257,20 +278,18 @@ def digitsum(n):
 if __name__ == '__main__':
     # 测试多种方法得到的 Fibonacci数，给定序列数n，得到第n个Fibonacci数。测试通过OK
     
-    num = 1000
+    num = 50
     # fibList = quick_pow(2, num)
     # print(fibList)
 
     # for i in range(num-10, num):
     #     print(i, fibo_index(num),  fibo_number(num)) 
     
-    
     # fib = Fibonacci(num, False)
     # print(list(fib))
-    #fib = fibo_matrix(num)
-    fib = fibo_SPow(num)
-    print(num, fib, fibo_number(num))
-
+    #print(num, fibo_matrix(num)==fibo_number(num))
+    print(num, fibo_next(num), fibo_number(num))
+    
     '''
     fib = Fibonacci()
     fib = fibo.fwhile(4)

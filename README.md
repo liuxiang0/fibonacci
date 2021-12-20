@@ -29,7 +29,7 @@ $F_n = \frac{1}{\sqrt5}\left((\frac{1+\sqrt5}{2})^n - (\frac{1-\sqrt5}{2})^n\rig
 简写为  $F_n=\frac{1}{\sqrt5}(\phi^n-(-\phi^{-1})^n)$
 
 $F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还可以扩充为实数和复数。  
-此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比（`S.GoldenRatio`）
+此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比率（`S.GoldenRatio`）
 
 求解过程可以用特征值法，求出 $x^2=x+1$ 的两个特征值 $\lambda_{1,2}=\frac{1\pm\sqrt{5}}{2},$ 通项为 $f(n)=c_1\lambda_1^n+c_2\lambda_2^n,$ 再由初始条件：$f(0)=0, f(1)=1,$ 得到方程组：  
 $\begin{cases}
@@ -37,7 +37,7 @@ $\begin{cases}
     c_1\lambda_1+c_2\lambda_2=1
 \end{cases}$
 
-解得： $c_1 = -c_2 = \frac{1}{\lambda_1-\lambda_2}=\frac{1}{\sqrt{5}}, f(n)=\frac{\lambda_1^n-\lambda_2^n}{\lambda_1-\lambda_2}.$
+解得： $c_1 = -c_2 = \dfrac{1}{\lambda_1-\lambda_2}=\dfrac{1}{\sqrt{5}}, f(n)=\dfrac{\lambda_1^n-\lambda_2^n}{\lambda_1-\lambda_2}.$
 
 ~~~python
 >>> from sympy import sqrt, cos
@@ -47,6 +47,55 @@ $\begin{cases}
 >>> fib = [p.subs({z:n}).simplify() for n in range(11)]
 >>> fib
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+~~~
+
+#### 1.1 Binet公式的推论: $f(n+1) = \text{round}(f(n)\times\phi)$
+
+通过Binet公式不难发现，[Fibonacci数只与前面的项有关系][fibsection4]，这是因为  
+$\phi=\frac{1+\sqrt{5}}{2}\approx 1.618, 1-\phi=\frac{1-\sqrt{5}}{2}\approx -0.618, f(n)=\frac{\phi^n}{\sqrt{5}} - \frac{(1-\phi)^n}{\sqrt{5}} = \text{round}(\frac{\phi^n}{\sqrt{5}})$
+
+通过前一个数乘以黄金比率，再四舍五入法取整(`round(x)`)，就得到了下一个Fibonacci数。
+
+$f(n+1) = \text{round}(f(n)\times\phi); \; \forall n\ge 2,  n\in \mathbb{N}^+$. 尾数忽略不计，位数变化情况如下：
+
+~~~python
+>>> from sympy import S, sqrt
+>>> [((1-S.GoldenRatio)**n/sqrt(5)).evalf(10) for n in range(2,10)]
+[0.1708203933, -0.1055728090, 0.06524758425, -0.04032522475, 0.02492235950, -0.01540286525, 0.009519494249, -0.005883371002]
+~~~
+
+#### 1.2 Fibonacci数的位数判断: $\text{round}(n\times \log(\phi) - \frac{1}{2}\log{5})$
+
+因为 $f(n)=\frac{\phi^n}{\sqrt{5}} - \frac{(1-\phi)^n}{\sqrt{5}},$ 所以取对数，得到：
+
+$\log{f(n)} = n\times \log(\phi) - \log\sqrt{5}= n\times \log(\phi) - \frac{1}{2}\log{5},$ 后面一项不影响位数的变化，可以忽略不计。
+
+从而 $f(n)$ 的位数为 $1 + \text{int}(n\times \log(\phi) - \frac{1}{2}\log{5}); \text{int}(x)=\text{floor}(x)\le x,$ 表示不超过 $x$ 的整数。
+
+~~~python
+>>> from sympy import fibonacci as fib
+>>> from sympy import S, log
+>>> [1+int(n*log(S.GoldenRatio,10)-log(5,10)/2) for n in range(2,50)]
+[1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10]
+>>> [len(str(fib(n))) for n in range(2,50)]
+[1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10]
+>>> [len(str(fib(n))) for n in range(2,50)]== [1+int(n*log(S.GoldenRatio,10)-log(5,10)/2) for n in range(2,50)]
+True
+~~~
+
+#### 1.3 已知Fibonacci数 $f(n)$，求 $n$
+
+因为 $f(n)\approx \phi^n/\sqrt{5}\implies n\approx\ln[\sqrt{5}f(n)]/\ln\phi=[\frac{1}{2}\ln5+\ln{f(n)}]/\ln\phi$
+
+如果给定的数不是Fibonacci数，则上述计算公式得到的可能是分数，但是也是接近某个Fibonacci数的分数。由此公式还可以得到不大于N，最接近N 的Fibonacci数 $f(n)$。  
+
+$n = \text{int}([\frac{1}{2}\ln5+\ln{N}]/\ln\phi)$
+
+~~~python
+>>> [int((log(5)/2+log(n))/log(S.GoldenRatio)) for n in [1000,2000,3000,4000,70000,90000]]
+[16, 17, 18, 18, 24, 25]
+>>> [fibonacci(n) for n in [16, 17, 18, 18, 24, 25]]
+[987, 1597, 2584, 2584, 46368, 75025]
 ~~~
 
 ### 2. 与数列求和相关的性质 [3][3_FibProperty]
@@ -113,9 +162,9 @@ $\forall n > 2, n \in \mathbb{N}^+, F_n(1) = F_n, z\in \mathbb{C}$.
 0.011235955056179775280898876404494382022471910112360
 ~~~
 
-### 7. 负小标表示的斐波那契数
+### 7. 负下标表示的斐波那契数
 
-如果允许小标为负数，则有 $F_{-n} = (-1)^{n+1} F_n$  
+如果允许下标为负数，则有 $F_{-n} = (-1)^{n+1} F_n$  
 
 ~~~python
 >>> [fibonacci(n) for n in range(-10,11)]
@@ -163,7 +212,7 @@ $F_n = \frac{\phi^n - (-\phi^{-1})^n}{\sqrt5} = \frac{\phi^n - (1-\phi)^n}{\sqrt
 如果令 $\alpha = \frac{1+\sqrt{5}}{2}, \beta=\frac{1-\sqrt{5}}{2},$  
 显然 $\alpha+\beta=1,  \alpha\cdot \beta=-1,$  
 满足 $x^2-x-1=0,$
-此时 $F_n = \frac{\alpha^n-\beta^n}{\sqrt{5}}$
+此时 $F_n = \dfrac{\alpha^n-\beta^n}{\sqrt{5}}$
 
 ### 4. **递归迭代算法：fibo_iteral(n, a=0, b=1)**
 
@@ -184,8 +233,6 @@ $F_n = \frac{\phi^n - (-\phi^{-1})^n}{\sqrt5} = \frac{\phi^n - (1-\phi)^n}{\sqrt
 
 ### 7. **矩阵方法**
 
-不推荐该算法, 局限: 当 n > 46，即出现溢出，得到负数.  
-
 定义矩阵 $M = \begin{pmatrix} 1 & 1\\1 & 0 \end{pmatrix}$
 
 $\begin{pmatrix} F_n \\ F_{n-1}\end{pmatrix}=M\begin{pmatrix} F_{n-1} \\ F_{n-2}\end{pmatrix}=\cdots= M^{n-1} \begin{pmatrix} F_1 \\ F_0\end{pmatrix}$
@@ -199,6 +246,8 @@ $M^n=\text{sympy.Pow}(M,n)=\begin{cases} M^{n>>1}\cdot M^{n>>1}, & n \mod 2=0 \\
 $n>>1$ 表示右移一位，即 $n = \frac{n}{2}$
 
 经过测试，用 SymPy 的符号运算（`Pow`），可以计算大数 $n$，不会产生溢出。一条语句就可以得到 `sympy.Pow(sympy.Matrix(2,2,[1,1,1,0], n-1))[0,0]`
+
+用 Python 内置函数 `pow(a,n)`(n > 46时溢出，32位整数限制) 或 numpy 库中的 `numpy.linalg.matrix_power(T, n)` (n稍大也会出现溢出错误，64位整数限制)。
 
 ### 8. **获得指定区间上的Fibonacci数列：fibo_between(min=0, max=np.inf, step=1)**
 
@@ -224,7 +273,9 @@ The Best Books about Fibonacci and the Fibonacci Sequence
 
 [1_OEIS]: http://oeis.org/A000045 "在线整数数列公益网站"
 
-[2_Binet]: http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html#section1
+[2_Binet]: http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html
+
+[fibsection4]: http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html#section4
 
 [3_FibProperty]: https://www.whitman.edu/Documents/Academics/Mathematics/clancy.pdf "Fibonacci Numbers by TYLER CLANCY"
 
