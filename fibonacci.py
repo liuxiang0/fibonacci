@@ -134,10 +134,33 @@ def fibo_near(Num):
     nearn = int((log(5)/2+log(Num))/log(S.GoldenRatio)) 
     return nearn, fibo_number(nearn)
 
+def fibo_dijkstra(n):
+    """ Fibonacci的Dijkstra算法:(推荐该算法，测试到 50000 也没有问题)
+    f(2n-1) = f(n-1)^2 + f(n)^2
+    f(2n)   = [2f(n-1)+f(n)]f(n)
+    上述算法的时间复杂性为 o(log(n))
+    Ref: 1978年 Dijkstra提供的算法 
+    http://www.cs.utexas.edu/users/EWD/ewd06xx/EWD654.PDF
+    """
+    
+    assert n >= 0, 'n为自然数'
+    fibs = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
+
+    if n in range(21): 
+        #print(n,fibs[n])
+        return fibs[n]
+    elif n % 2 : #奇数 odd
+        n = (n+1)>>1
+        return fibo_dijkstra(n-1)**2 + fibo_dijkstra(n)**2
+    else:  #偶数 even
+        n >>=1 
+        return (2*fibo_dijkstra(n-1)+fibo_dijkstra(n))*fibo_dijkstra(n)
+
 
 # The following algorithms bases on recursive
+
 def fibo_next(n):
-    """不用加法，而改用乘法的递归算法:
+    """不用加法，而改用乘法的递归算法:（不推荐，测试到1000就超过了迭代深度）
        f(n+1) = round (f(n)*S.GoldenRatio), n>2, f(2)=1
     """
     assert n >= 0, 'n为自然数'
@@ -278,7 +301,7 @@ def digitsum(n):
 if __name__ == '__main__':
     # 测试多种方法得到的 Fibonacci数，给定序列数n，得到第n个Fibonacci数。测试通过OK
     
-    num = 50
+    num = 50000
     # fibList = quick_pow(2, num)
     # print(fibList)
 
@@ -288,7 +311,9 @@ if __name__ == '__main__':
     # fib = Fibonacci(num, False)
     # print(list(fib))
     #print(num, fibo_matrix(num)==fibo_number(num))
-    print(num, fibo_next(num), fibo_number(num))
+    #print(num, fibo_next(num))
+    print(num, fibo_number(num))
+    print(num, fibo_dijkstra(num))
     
     '''
     fib = Fibonacci()
