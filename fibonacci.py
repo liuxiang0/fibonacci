@@ -3,14 +3,13 @@
 """
 Fibonacci: 最经典算法，用Python实现，递归、迭代、公式法、矩阵方法等多种方法
 下面给出了多种实现fibonacci（n）的方法，全部是用Python语句实现，
-测试环境：Python3.8.6 64-bit Windows
+测试环境: Python3.8.6 64-bit Windows
 Author: Liu Xiang
 Email : liuxiangxyd@163.com
 """
 
-import numpy as np
-from sympy.core import GoldenRatio  # 矩阵运算需要其中的Matrix类
 from sympy import log, S
+#from sympy.core import GoldenRatio  # 矩阵运算需要其中的Matrix类
 
 
 class Fibase(object):
@@ -135,10 +134,10 @@ def fibo_near(Num):
     return nearn, fibo_number(nearn)
 
 def fibo_dijkstra(n):
-    """ Fibonacci的Dijkstra算法:(推荐该算法，测试到 50000 也没有问题)
-    f(2n-1) = f(n-1)^2 + f(n)^2
-    f(2n)   = [2f(n-1)+f(n)]f(n)
-    上述算法的时间复杂性为 o(log(n))
+    """最佳递归迭代算法，Fibonacci的 Dijkstra 算法（Best):
+    f(2n-1) = f(n-1)^2 + f(n)^2      （1）
+    f(2n)   = [2f(n-1)+f(n)]f(n)     （2）
+    上述算法的时间复杂性为 O(log(n))，测试到 300万也没有问题。
     Ref: 1978年 Dijkstra提供的算法 
     http://www.cs.utexas.edu/users/EWD/ewd06xx/EWD654.PDF
     """
@@ -147,7 +146,6 @@ def fibo_dijkstra(n):
     fibs = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
 
     if n in range(21): 
-        #print(n,fibs[n])
         return fibs[n]
     elif n % 2 : #奇数 odd
         n = (n+1)>>1
@@ -205,36 +203,42 @@ def fibo_logical(n):
     else:
         return int(1 and n < 2) or fibo_logical(n-1) + fibo_logical(n-2)
 
-
-def fibo_matrix_bakcup(n):
-    """矩阵方法: [f_n f_{n-1}] = [f_{n-1} f_{n-2}]*M =...
+# 1. 使用 numpy 的矩阵运算得到 斐波那契数列
+def fibo_matrix_np(n):
+    """通过矩阵的幂运算，得到新矩阵，因为初始值为[1,0],所以新矩阵的[0,0]就是所求。
+    [f_n f_{n-1}] = [f_{n-1} f_{n-2}]*M =...
     = [f_1,f_0]*M^{n-1} , M=matrix[[1,1],[1,0]]
     Using numpy.dot(A,B)，也可以用 pow(M,n)=M^n
-    TODO: 如何改成符号运算，使之针对大数n不会溢出？
+    改成符号运算，参见 fibo_matrix, 使之针对大数n不会溢出
     """
+    import numpy as np
 
     def mat_pow(n):
         '''numpy 中实现矩阵乘法是 O(log n)'''
+        # 初始化矩阵 M = [1,1,],[1,0]]
         T = np.matrix("1 1;1 0", dtype='int64')
-        return np.linalg.matrix_power(T, n)
+        # 返回是matrix类型 M**n, M^n
+        return np.linalg.matrix_power(T, n)  # n>80 也溢出
         #pow(T, n) 当 n > 46 时，溢出
 
     assert n >= 0, 'n为自然数'
     if (n==0 or n==1):
         return n
     # fib list codes: 返回所有Fib数列
-    res = []
-    for i in range(n-1):
+    res = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55] #0-10不用计算了
+    if n < 11: 
+        return res[:n+1]
+    for i in range(10, n):
         res.append(np.array(mat_pow(i))[0][0])
     return res
     #return np.array(mat_pow(n-1))[0][0]
     
 
 def fibo_matrix(n):
-    '''矩阵方法: 
+    '''矩阵乘法的符号运算，解决溢出问题。
     [f_n f_{n-1}].T = M*[f_{n-1} f_{n-2}].T =...
     = M^{n-1}*[f_1,f_0].T, M = matrix[[1,1],[1,0]]
-    f_n = M^{n-1}[0,0]
+    f_n = M^{n-1}[0,0], 因为 [f_1,f_0]=[1,0], 乘法的结果就是矩阵第一个数[0,0]。
     '''
     from sympy import Pow, Matrix
 
@@ -243,7 +247,7 @@ def fibo_matrix(n):
     return Pow(Matrix(2,2,[1,1,1,0]), n-1)[0,0]
 
 
-def fibo_between(min=0, max=np.inf, step=1):
+def fibo_between(min=0, max=S.Infinity, step=1):
     """闭区间[min,max]内的Fibonacci数，间隔为 step"""
     if min < 0:
         min = 0

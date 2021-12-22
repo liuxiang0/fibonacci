@@ -32,7 +32,8 @@ print('最初两个数为1,3，前{0}个Lucas数: {1} by {2}'.format(num, list(f
 fib = fibo_between(num-10, num)
 print('第{0}~{1}个Fibonacci数: {2} by {3}'.format(num-10, num, list(fib), 'fibo_between'))
 
-# 矩阵自乘方法
+# 矩阵自乘方法,符号运算，非常大数据也没有问题, 超过10万变成了符号运算。
+num = 100000
 fib = fibo_matrix(num)
 print('第{0}个Fibonacci数: {1} by {2}'.format(num, fib, fibo_matrix.__name__))
 

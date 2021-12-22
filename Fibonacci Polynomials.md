@@ -8,12 +8,16 @@
 
 1978年，Edsgar W Dijkstra 教授在文中描述了 Fibonacci的[Dijkstra算法][Dijkstra]。
 
-$f(2n-1) = f(n-1)^2 + f(n)^2$  
-$f(2n)   = [2f(n-1)+f(n)]f(n)$  
+$\begin{cases}
+    f(2n-1) = f(n-1)^2 + f(n)^2 & (1)  \\
+    f(2n)  = [2f(n-1)+f(n)]f(n) & (2)
+\end{cases}$  
 
 上述算法的时间复杂性为 $o(\log{n})$，推荐该算法，测试到 `50000` 都没有问题。
 
 举例：计算$f(1000),$ 只需要计算 $f(500), f(499),$ 依次类推，结果如下：
+
+<!--不支持mermaid时，用图片 ![Dijkstra Algorithm for Fibonacci Numbers](img/Fibonacci_Dijkstra_Algorithm.jpg) -->
 
 :::mermaid
 graph LR
@@ -50,6 +54,8 @@ graph LR
     H3-->J3[F_0]
 :::
 
+算法实现参见[liuxiang0's github for fibo_dijkstra][fibo_Dijkstra_src]
+
 ## 函数定义始于多项式递归定义
 
 定义(Definition):  
@@ -82,6 +88,8 @@ $f(10,z) = z^{9} + 8 z^{7} + 21 z^{5} + 20 z^{3} + 5 z$
 ~~~
 
 [Dijkstra]: http://www.cs.utexas.edu/users/EWD/ewd06xx/EWD654.PDF "In honor of Fibonacci"
+
+[fibo_Dijkstra_src]: https://github.com/liuxiang0/fibonacci/blob/master/fibonacci.py "Dijkstra Algorithm(def fibo_dijkstra(n)) for Fibonacci"
 
 [RonKnott]: http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fib.html "Fibonacci Numbers and the Golden Section"
 
