@@ -1,17 +1,19 @@
 # 斐波那契数列 Fibonacci Sequence
 
-本文介绍了多种方式得到斐波那契数列或斐波那契数。斐波那契数列也称为“兔子数列”。来源于兔子繁殖的预测。它的重要性体现在相邻两数之比趋向黄金分割数，自然界很多现象也可找到它的身影，画图还与漂亮的螺旋线有关。
+本文介绍了多种方式得到斐波那契数列或斐波那契数。斐波那契数列也称为“**兔子数列**”。  
+来源于兔子繁殖的预测。它的重要性体现在相邻两数之比趋向黄金分割数，自然界很多现象也可找到它的身影，图形与漂亮的螺旋线有关。
 
 介绍自然界中的 Fibonacci 数，参见网站 [自然界中的斐波那契数](https://insteading.com/blog/fibonacci-sequence-in-nature/ "The Fibonacci Sequence in Nature")
 
 **Fibonacci 数列**定义为：  
-$F_0=0, F_1=1, F_{n}=F_{n-1}+F_{n-2}; n\geq 2, n\in \mathbb{N}^+$  
+
+$F_0=0, F_1=1, F_{n}=F_{n-1}+F_{n-2}; n\geq 2, n\in \mathbf{N}^+$  
 也可以写成函数形式，关于整数的函数:  
 $f(n)=\begin{cases} \qquad\qquad 0 &, n=0\\ \qquad\qquad 1 &, n=1\\ f(n-1)+f(n-2) &,n>=2\end{cases}$
 
 也属于一种特殊的整数数列，详细参考**在线整数数列百科** [1][1_OEIS]
 
-下面这段代码就是 Python 的 SymPy 库中提供的 Fibonacci类 `fibonacci(n, Sym=None)`  
+下面这段代码就是 Python 的 `SymPy` 库中提供的 `Fibonacci`类 `fibonacci(n, Sym=None)`  
 
 ~~~python
 >>> from sympy import fibonacci
@@ -25,10 +27,10 @@ $f(n)=\begin{cases} \qquad\qquad 0 &, n=0\\ \qquad\qquad 1 &, n=1\\ f(n-1)+f(n-2
 ### 1. 通项公式是奇妙的无理数公式组合
 
 很显然，斐波那契数列都是**自然数**，但是却可以用**含有无理数**的公式表示每一项：  
-$F_n = \frac{1}{\sqrt5}\left((\frac{1+\sqrt5}{2})^n - (\frac{1-\sqrt5}{2})^n\right),$ 也称为 **Binet公式** [2][2_Binet]  
+$F_n = \frac{1}{\sqrt 5}\left((\frac{1+\sqrt5}{2})^n - (\frac{1-\sqrt5}{2})^n\right),$ 也称为 **Binet公式** [2][2_Binet]  
 简写为  $F_n=\frac{1}{\sqrt5}(\phi^n-(-\phi^{-1})^n)$
 
-$F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbb{N}, z$ 还可以扩充为实数和复数。  
+$F_z = \frac{\phi^z - \cos(\pi z) \phi^{-z}}{\sqrt 5}; z\in \mathbf{N}, z$ 还可以扩充为实数和复数。  
 此处 $\phi =\frac{1+\sqrt{5}}{2}$ 为黄金分割比率（`S.GoldenRatio`）
 
 求解过程可以用特征值法，求出 $x^2=x+1$ 的两个特征值 $\lambda_{1,2}=\frac{1\pm\sqrt{5}}{2},$ 通项为 $f(n)=c_1\lambda_1^n+c_2\lambda_2^n,$ 再由初始条件：$f(0)=0, f(1)=1,$ 得到方程组：  
@@ -147,7 +149,7 @@ $\{p(k), k=2,3,...,20\} = \{3,8,6,20,24,16,12,24,60,10,24,28,48,40,24,36,24,18,6
 定义(Definition)：  
 $F_1(z) = 1, F_2(z) = z,$  
 $F_n(z) = z*F_{n-1}(z) + F_{n-2}(z);$  
-$\forall n > 2, n \in \mathbb{N}^+, F_n(1) = F_n, z\in \mathbb{C}$.
+$\forall n > 2, n \in \mathbf{N}^+, F_n(1) = F_n, z\in \mathbf{C}$.
 
 ### 6. 神秘的斐波那契数 89 的倒数(reciprocal)
 
@@ -243,7 +245,7 @@ $\begin{pmatrix} F_n \\ F_{n-1}\end{pmatrix}=M\begin{pmatrix} F_{n-1} \\ F_{n-2}
 $M^n=\text{sympy.Pow}(M,n)=\begin{cases} M^{n>>1}\cdot M^{n>>1}, & n \mod 2=0 \\ M\cdot M^{(n+1)>>1}\cdot M^{(n+1)>>1}, & n \mod 2=1
 \end{cases}$
 
-$n>>1$ 表示右移一位，即 $n = \frac{n}{2}$
+$n>>1$ 表示右移一位，即 $n \rightarrow \frac{n}{2}$
 
 经过测试，用 SymPy 的符号运算（`Pow`），可以计算大数 $n$，不会产生溢出。一条语句就可以得到 `sympy.Pow(sympy.Matrix(2,2,[1,1,1,0], n-1))[0,0]`
 

@@ -1,0 +1,545 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title> Fractions to Decimal and Decimal to Fraction Calculator in any Base</title>
+<META name="author" content="Dr R Knott: enquiry (AT) ronknott (DOT) com">
+<META name="description" content="Interactive calculator to convert fractions to and from
+  decimals and ANY other bases from 2 upwards, giving as many
+  decimal places as you like. Also, given a recurring form of a decimal finds the exact fraction.
+  Does not need any other downloaded software - just a JavaScript-enabled browser.">
+  
+<META name="keywords" content="fraction, decimal, 
+  terminating, fractions, proper fraction, real number, floating point, mixed fraction,mixed,
+  recurring, repeat, repeating, recur,  infinite, decimal places,  convert, converter, calculator, compute,
+  interactive, online, arbitrary precision, precise, accurate, exact, base, radix, binary, octal, hexadecimal,
+  duodecimal, base, convert, converter, changer">
+  
+<link rel=stylesheet type="text/css" href="../global.css">
+<link rel=stylesheet type="text/css" href="fractions.css">
+<script type="text/javascript"  src="../global.js"></script>
+<script type="text/javascript" src="FractionsCalc.js"></script>
+
+</head>
+<body onload="javascript:document.getElementById('noscript').style.display = 'none'" >
+
+
+
+<h1>              Fractions &ndash; Decimals Calculator <small>version 2.6</small>
+</h1>
+
+The  Calculator on this page will convert a proper fraction 
+to and from a decimal or radix fraction.
+<div class=boxblk>
+For a more complete Introduction to Fractions and their several kinds of Decimals,<br> see
+the related 
+<a href="fractions.html">Fractions and Decimals</a> page.
+</div>
+<p>
+
+<div id="noscript" style="border:2px solid red;margin:3%;padding:3%"> 
+  The calculator on this page requires JavaScript but you appear to have switched JavaScript off
+(it is disabled).  <em> If you want to use this calculator</em> please go to the Preferences 
+for this browser and enable JavaScript then Reload this page.
+</div>
+
+
+<em> All proper fractions are input as two decimal numbers, the <span title="the top part">numerator</span> and the 
+<span title="the bottom part">denominator</span></em>.
+The decimal fractions are shown <em> to any number of decimal places</em>.<br>
+An option is to see the "decimal" fraction in another base apart from decimal (base 10)
+e.g. base 2 (binary),  base 8 (octal),  base 16 (hexadecimal) or any other base from 2 upwards.
+
+
+<br>
+<input type=button class=showhidebtn id="basesBTN" value="Show more on Bases other than 10" onClick="showhideIdBTN('basesDIV','basesBTN')">
+
+<div id="basesDIV" class=hiddeninfo>
+
+
+	The default base is 10 for decimals, but you can change it to any other value from 2 upwards. 
+	<em>All proper fractions are input as decimal numbers</em>.
+	It is only the radix fractions that are given in the
+	specified base.
+	<br>
+	A <b>decimal fraction in any base other than 10</b> is called <em>a radix fraction</em> here.
+	For example, 0.101<sub>2</sub> is the base-2 (binary) radix fraction form of the proper fraction 
+	 <sup>5</sup>/<sub>8</sub>
+	and similarly 0.47<sub>8</sub> is the base-8 (octal) radix fraction for <sup>39</sup>/<sub>64</sub>.
+	<br>
+	The "digits" of numbers in <em>a base bigger than 10</em> are each shown as a separate <em>decimal number</em>
+	  with each column (place) separated by a space.
+	For example:
+	<div class=right>
+		<table >
+		<tr  valign=baseline><td class=right> <sup>11</sup>/<sub>12</sub> + <sup>1</sup>/<sub>12<sup>2</sup></sub> in base 12  is shown as </td><td class=outp>0 .</td><td class=outp> 11 </td><td class=outp>1</td></tr>
+	    <tr  valign=baseline><td class=right> <sup>1</sup>/<sub>12</sub> + <sup>1</sup>/<sub>12<sup>2</sup></sub> in base 12 is shown as </td><td class=outp>0 . </td><td class=outp>1 </td><td class=outp>1</td></tr>
+		<tr valign=baseline><td class=right> <sup>11</sup>/<sub>12<sup>2</sup></sub> in base 12 is shown as </td><td class=outp>0 . </td><td class=outp>0 </td><td class=outp>11 </td></tr>
+		</table>
+	</div>
+</div>
+
+
+<h2>                                 to <i>any</i> number of decimal places
+</h2>
+ The decimal or radix equivalents of fractions here
+can be given to <i>any number of decimal(radix)  places</i>, unlike an ordinary calculator which often only gives 
+up to 12 or 15 significant figures.
+<br>
+All the initial digits are shown but since recurring parts can be very long, you can specify how many of the beginning
+and ending digits of the period (the <i>outer</i> digits) you want to be shown in the RESULTS.
+Leaving it empty or entering  0 will give only the <i></i>number of digits in
+its fixed and recurring parts and not show any of the decimal/radix places.
+<br clear=all>
+<input type=button  class=showhidebtn id="partsBTN" value="Show more on Fixed and Recurring parts of a Fraction"
+    onClick="showhideIdBTN('partsDIV','partsBTN')">
+
+<div id="partsDIV" class=hiddeninfo>
+
+In every base, a radix ("decimal") fractional value will only occur in one of the following 3 forms:
+<dl>
+<dt>terminating:
+<dd> a finite number of places such as 1/2 = 0.5 and  3/8 = 0.325
+<dt> purely recurring:
+<dd> a cycle of digits which repeats for ever, such as 1/3 = 0.33333.... and 4/33 =  0.121212121212.... which are output by the Calculator as 0.[3]
+and 0.[12] respectively
+<dt>  an initial fixed and finite part followed by an recurring part (<i>the period</i>) which repeats for ever.
+<dd> such as 52/225 = 0.23111111111... = 0.23[1] and 1/700 = 0.00 142857 142857 ... = 0.00[142857]
+</dl>
+</div>
+<br>
+The first part after the radix point is the "non-repeating" or fixed part, if any.
+Leave this empty if your decimal is purely recurring. <br>
+The recurring  part is always
+shown here inside square brackets.  Leave it empty for a terminating decimal.
+
+
+<br>
+<input type=button class=showhidebtn id="helpfdBTN" value="Show Fraction to Decimal Examples"
+   onClick="showhideIdBTN('helpfdDIV','helpfdBTN')">
+
+<div id="helpfdDIV" class=hiddeninfo>
+
+
+<h3 class=radixFractSTYL>                           Fraction to Decimal Examples
+</h3>
+
+<dl>
+
+<dt> What is <sup>7</sup>/<sub>15</sub> as a decimal fraction?
+
+<dd><ul>
+  <li> Enter <span class=top>7</span> and <span class=top>15</span> as the fraction 
+   <span class=top><sup>7</sup>/<sub>15</sub></span> 
+ </li>
+ <li> Alter the number in the <span class="radixFractSTYL">Show outer<input type="text"  size=4 readonly value="10"> recurring</span> box
+    to the number of decimal places you want displayed.
+ </li>
+ <li> click on <img src="../images/downblk.gif"  style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal"> to
+     "move" the fraction down to the decimals area.
+ </li>
+ <li>The fixed and recurring parts show the result 
+      <div align=center class="radixFractSTYL" style="width:20em;height:5em">
+    <span style="color:white">1 initial place, 1 recurring place</span><br>
+      0. <input type="text" value="4" size=4 readonly> <br>
+    [ <input type="text" value="6" size=4 readonly> ] 
+    </div>
+     and the results are also recorded in the <span class=outp>RESULTS</span> area:</li>
+ <li class="res">7/15 has 1 initial digit followed by a period of 1 digit<br>
+    7/15 = 0.4[6]<br>
+    7/15 = 0.4666666666 ...
+ </li>
+ </ul>
+
+<dt> What are the first 100 decimals places for the fraction <sup>1</sup>/<sub>9899</sub>?
+
+<dd>
+   <ul>
+   <li>Enter the fraction <span class=properFractSTYL><input class=top readonly size=5 value="1"> /<input class=top size=5 readonly value="9899"></span>
+       in the fraction input boxes.</li>
+   <li> Enter 100 in the number of outer recurring places box:<br>
+      <span class=radixFractSTYL>show outer <input class=bot readonly value="100" size=4> recurring </span> . 
+   </li><li>Press  
+    <img src="../images/downblk.gif"  style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+     button:
+    </li><li class=res><small>
+	  1/9899 is purely recurring with a period of 468 digits<br>
+   1/9899 = 0.[0001010203050813213455904636832003232649762602283058894837862410344479240327305788463481159713102333...<br>
+            9575714718658450348520052530558642287099707041115264168097787655318719062531568845337912920497019901]
+            </small></li>
+    </ul>
+    
+<dt> Does the fraction <sup>68</sup>/<sub>175</sub> terminate or recurr?
+
+<dd>
+   <ul>
+   <li>Enter <span class=properFractSTYL><input readonly class=top value="68" size=3> / 
+        <input class=top readonly value="175" size=3></span> in the fraction input boxes 
+   </li> 
+   <li> Enter <span class=bot>0 </span> in the <span class=radixFractSTYL>Show outer <input type="text" class=bot size=4 readonly value="0"> recurring</span> places box
+    or else leave it empty. 
+   </li>
+   <li>Press  <img src="../images/downblk.gif"  style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+    </li>
+    <li class="res ttblue">
+      68/175 has 2 initial digits followed by a period of 6 digits. 
+     </li><li >If you want to see the decimal places, change the number of outer places
+     to 10 or some other value and press <img src="../images/downblk.gif"  style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+     again.</li>
+      <li  class=res>
+        68/175 = 0.38[857142]<br>
+        68/175 = 0.3885714285 ... <br></li>
+     <li style="list-style-type:none"> which means the radix fraction begins with 38 followed by 857142 857142 857142 ...,
+     the recurring part being shown in square brackets.
+     </li></ul>
+     
+<dt> What is <sup>1</sup>/<sub>3</sub> in binary?
+<dd> 
+  <ul>
+  <li> Change the base to 2:<br>
+  <span class=radixFractSTYL>in base <input class=bot value="2" readonly size=3></span></li>
+  <li>In the top part enter <span class=top>1/3</span>
+  </li><li>Click on   <img src="../images/downblk.gif"  style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+  </li><li class=res>
+  1/3 = 1<sub>2</sub>/11<sub>2</sub>. In base 2 it is purely recurring with a period of 2 digits<br>
+  1/3 = 0.[01] in base 2<br>
+  1/3 = 0.0101010101 ... in base 2
+   </li>  
+</ul>
+</dl>
+</div>
+
+<input type=button class=showhidebtn id="helpdfBTN" value="Show Decimal to Fraction Examples" onClick="showhideIdBTN('helpdfDIV','helpdfBTN')">
+
+<div id="helpdfDIV" class=hiddeninfo>
+
+<h3 class=radixFractSTYL>      Decimal to Fraction
+</h3>
+
+The part before any recurring digits (if any) is called the Fixed part of the decimal fraction and the repeating part (if any) is 
+put inside square brackets [ and ]<br>
+<span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="Fixed digits"> 
+  [ <input class=bot readonly value="Recurring digits"> ] &nbsp;</span>
+  
+<dl>
+<dt> What fraction corresponds to a given decimal fraction, for example 0.0625?
+<dd><ul>
+    <li>In the lower part enter <span class=bot>0625</span> in the Fixed part, leaving the Recurring part empty:<br>
+      <span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="0625" size=5> 
+     [ <input class=bot readonly value="" size=5> ] &nbsp;</span>
+    </li><li>Click on  <img src="../images/upblk.gif"  class=radixFractSTYL 
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction">
+    </li>
+    <li class=res>  0.0625 = 1/16 </li>
+    </ul>
+    
+<dt> What is 0.222222.... as an exact fraction?
+<dd>
+    <ul><li>
+    Leave the initial Fixed part blank and type <span class=bot>2</span> in the Recurring part input box:<br>
+     <span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="" size=5> 
+     [ <input class=bot readonly value="2" size=5> ] &nbsp;</span>
+    </li><li> Press  <img src="../images/upblk.gif"  class=radixFractSTYL 
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction">
+     </li><li  class=outp> 0.[2] = 2/9
+     </li></ul>
+     
+<dt> What is 0.011 in binary (base 2) as a proper fraction?
+<dd> <ul><li>
+    Enter <span class=bot>011</span> as the fixed part and make sure the Recurring part is empty:<br>
+    <span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="011" size=5> 
+  [ <input class=bot readonly value="" size=5> ] &nbsp;</span><br>
+     Change the base to 2:<br>
+     <span class=radixFractSTYL><i>in base</i> <input readonly size=3 class=bot value="2"> &nbsp;</span><br>
+     to indicate the fixed and recurring parts are in binary.
+     </li><li> Click on  <img src="../images/upblk.gif"  class=radixFractSTYL 
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction">
+     </lI><li class=res> 0.011 in base 2 = 3/8 
+     </li></ul>
+<dt> What is the binary (base 2)  recurring fraction 0.1001100110011 .... as a proper fraction?
+<dd>
+   <ul><li>
+   Enter <span class=bot>1</span> as the fixed part and <span class=bot>0011</span>
+   in the Recurring part and change the base to <span class=bot>2</span>
+   </li><li>Click on  <img src="../images/upblk.gif"  class=radixFractSTYL 
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction">
+   </li><li class=res>  0.1[0011] in base 2 = 3/5 </li>
+   <li> The following are equally valid inputs for this question:<br>
+   <span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="" size=5> 
+  [ <input class=bot readonly value="1001" size=5> ] &nbsp;</span><br>
+  <span class="radixFractSTYL">&nbsp;0 . <input class=bot readonly value="100" size=5> 
+  [ <input class=bot readonly value="1100" size=5> ] &nbsp;</span>
+  </li>
+   </ul>
+   
+<dt>What is the fraction proper fraction corresponding to the base 12 fraction 0 . 10 2 11 11 11 ...?
+  <dd> For bases above 10, enter the "digits" as decimal numbers, one for each place, separated by <b>a space</b>.
+  <ul>
+  <li> Here we enter <span class=radixFractSTYL>0 . <input class=bot readonly size=8 value="10 2"> 
+    [ <input class=bot readonly size=8 value="11"> ]</span> </li>
+ <li> Change the base:<br>
+     <span class=properFractSTYL>in base <input class=bot readonly size=4 value="12"></span></li>
+    <li> Press the  <img src="../images/upblk.gif"  class=radixFractSTYL 
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction"> button </li>
+    <li class=res>
+    0 . 10 2 [11] in base 12 = 41/48</li>
+    <li>The fraction has been entered into the top part so press <img src="../images/downblk.gif" style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+           to check it, if you like: </li>
+    <li class=res>
+    41/48 = 3 5<sub>12</sub>/4 0<sub>12</sub>. In base 12 it terminates after 2 digits
+    41/48 = 0 . 10 3 in base 12</li>
+    <li>Why is this not the same as the values we gave it: 0 . 10 2 11 11 11 .....?<br>
+      Because just as 0.19999999.... in decimal is the same as 0.2, so 0.10 2 11 11 11 11 in base 12 is really just
+        0.10 3!
+    </li>
+   </ul>
+</dl>
+</div> 
+
+
+
+<h3> Special decimal fractions made from interesting series of numbers</h3>
+
+The <select><option>Choose a series with a pre-set fraction:</option></select>  button lets you select
+from a choice of series and
+will fill in a fraction in the top part of the Calculator
+ whose   decimal fraction is  just that particular series of numbers:
+  e.g. the decimal which is the pattern 0,1,2,3,4,... , 
+  with 2 digits (or 1 digit or 3 digits) for each term is 0&middot;00 01 02 03 04 05 06 07 08 09 10 11 ... 
+  and, surprisingly, it is  the decimal expansion of the fraction <sup>1</sup>/<sub>9801</sub>. Since
+  all fractions terminate or recurr, then eventually the pattern appears to break down.
+<p>
+
+
+<!-- ------------------------------------------------  -->
+
+<div class=calc> C A L C U L A T O R
+<form name="fracF" action="">
+
+<div class=norm>
+<table align=center border=0 cellpadding=5 cellspacing=2>
+<tr><td align=center>
+  <input type=reset value="Clear" class=clear 
+       onMouseOver="this.style.cursor='pointer';this.style.backgroundColor='black'"
+       onMouseOut="this.style.cursor='default';this.style.backgroundColor='#CCC'"
+       title="Clear inputs and set output to 30 places, base 10"> 
+       </td>
+   <td width=20></td></tr>
+<tr >
+  <td   class="fromrat FselectseriesSTYL" align=center > 
+     <select id="egsfracF" size=1  onChange="outF='fracF';selectfrac('fracF')">
+     
+	<option value="" selected>Choose a series with a pre-set Base 10 fraction:
+	<option value="[[100,99*99],[2,-1],[1,2],2]"> All numbers (2 digits each)  <!-- 100/99/99 -->
+	<option value="[[1000,999*999],[2,-1],[0,1],3]"> All numbers (3 digits each) <!-- 1000/999/999 =1000/998001-->
+	<option value="[[200,99*99],[2,-1],[0,2],2]"> Even numbers (2 digits each)   <!-- 200/99/99 =200/9801-->
+	<option value="[[2000,999*999],[2,-1],[0,2],3]"> Even numbers (3 digits each) <!-- 2000/999/999 -->
+	<option value="[[101,99*99],[2,-1],[1,3],2]"> Odd numbers (2 digits each)   <!-- 101/99/99 -->
+	<option value="[[1001,999*999],[2,-1],[1,3],3]"> Odd numbers (3 digits each) <!-- 1001/999/999 -->
+	<option value="[[1,100-2],[2],[1],2]"> Powers of 2 (2 digits each) <!-- 1/(100-2) -->
+	<option value="[[1,1000-2],[2],[1],3]"> Powers of 2 (3 digits each) <!-- 1/(1000-2) -->
+	<option value="[[1,10000-2],[2],[1],4]"> Powers of 2 (4 digits each) <!-- 1/(10000-2) -->
+	<option value="[[1,100-3],[3],[1],2]"> Powers of 3 (2 digits each)   <!-- 1/(100-3) -->
+	<option value="[[1,1000-3],[3],[1],3]"> Powers of 3 (3 digits each)   <!-- 1/(1000-3) -->
+	<option value="[[1,10000-3],[3],[1],4]"> Powers of 3 (4 digits each)  <!-- 1/(10000-3) -->
+	<option value="[[101,970299],[3,-3,1],[0,1,4],2]"> Squares (2 digits each)
+	<option value="[[1001,997002999],[3,-3,1],[0,1,4],3]"> Squares (3 digits each) 
+	<option value="[[10000,99*99*99],[3,-3,1],[0,1,3],2]">Triangular (2 digits each) <!-- 10000/970299-->
+	<!-- option value="[[1000000,999*999*999],[3,-3,1],[0,1,3],3]">Triangular (3 digits each)  --> <!--  10000000/997002999 -->
+	<option value="[[1,100-10-1],[1,1],[0,1],1]"> Fibonacci (single digits)  <!-- 1/89 -->
+	<option value="[[1,10000-100-1],[1,1],[0,1],2]"> Fibonacci (2 digits each) <!-- 100/9899 -->
+	<option value="[[1,998999],[1,1],[0,1],3]"> Fibonacci (3 digits each)  <!-- 10^3/(10^6-10^3-1) -->
+	<option value="[[1,109],[-1,1],[,],1]">Fibonacci backwards (single digits)  <!-- 1/109 -->
+	<option value="[[1,10099],[-1,1],[,],2]">Fibonacci backwards (2 digits each)
+	<option value="[[1,1000999],[-1,1],[,],3]">Fibonacci backwards (3 digits each)
+	<option value="[[19,89],[1,1],[2,1],1]">Lucas  (1 digit each)
+	<option value="[[199,9899],[1,1],[2,1],2]">Lucas  (2 digits each)
+	</select>
+	</td>
+	<td width=20></td></tr>
+<tr >
+         <td class="centered properFractSTYL" >
+		  
+		   <table border=0 cellpadding=0 cellspacing=0  align=center class="fromratfract">
+		  <tr><td align=center>&nbsp;<input type="text"   class="centered top"
+   id="numerfracF" size=40  value="1" 
+              title="You can use + - * / ^ here but the result must be a whole number>0"
+             >&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		  <!-- tr><td height=2><img src="../images/empty.gif" alt=" " height=2></td></tr -->
+		  <tr><td><hr style="color:black;background-color:black;height:2px"></td></tr>
+		  <!-- tr><td height=2><img src="../images/empty.gif" height=2 alt=" "></td></tr -->
+		  <tr><td align=center><input type="text"   class="centered top"
+   id="denomfracF"  size=40 value="9801" 
+      title="You can use + - * / ^ here but the result must be a whole number>0"
+		  ></td>
+	
+	 </tr>
+    </table>
+</td>
+	<td width=20>
+			     <button type="button" 
+           style="background-color:transparent;border:0px"
+             onMouseOver="getElementById('downBTN').style.borderStyle='inset';this.style.cursor='pointer'" 
+             onMouseDown="getElementById('downBTN').style.borderStyle='outset'"
+            onMouseUp=  "getElementById('downBTN').style.borderStyle='double'"
+             onMouseOut= "getElementById('downBTN').style.borderStyle='double'"
+    onClick="outF='fracF';this.style.cursor='wait';var np=doTerminates('fracF');if(isnotwhole(np) && decswanted('fracF') ){doDecs('fracF',false,np);if(moredecstoshow(np,'fracF'))doDecs('fracF',true,np)};this.style.cursor='default'"
+        >
+        <img src="../images/downblk.gif" id='downBTN' style="border:3px double black;" 
+           class=properFractSTYL width=20 height=20  alt="Fraction -> Decimal">
+        </button>
+
+        </td>
+</tr>
+ 
+<tr class=centered>
+   <td  class=radixFractSTYL >
+		<table cellspacing=0 cellpadding=3 align=center border=0>
+		<tr><td colspan=3 align=center>
+		    <span  id="declensfracF"  style="color:#FFF;font-size:85%" >&nbsp;</span></td>	
+			</tr>
+		<tr><td>0 &middot;</td>
+			<td>
+			<input type="text" 
+		       id="decfxdfracF" class=bot value="" size=40    onFocus="cleardeclens('fracF')">
+		   </td>
+		  
+       </tr>
+		<tr><td  valign=middle align=right style="font-size:140%">[</td>
+			<td><input type="text" 
+		id="decrptfracF" class=bot value="" size=40 onFocus="cleardeclens('fracF')">
+		    <span style="font-size:140%">]</span>
+			</td>
+			</tr>
+		
+		<tr><td colspan=3 align=center> 
+                <span style="font-style:italic;" >
+               in base 
+               <input type="text" 
+		id="basefracF" value="10" class=bot size=6 
+		     title="You can use + - * / ^ here but the result must be a whole number, at least 2" ></span>,
+		 <small>show outer</small>
+		     <input  type="text" value="10" class="bot" id="ndpsfracF" size=3 > 
+		     <small> recurring</small>
+		</td></tr>
+		
+		 <tr><td colspan=4 class="small right">
+       show periods as 
+       <span class=calcbg style="padding:1px"><span class="maths overbar">123</span>
+       :<input type=radio name="barsqfracF" checked value="bar" ></span>
+        or 
+          <span class=calcbg style="padding:1px">
+          <span class=maths>[123]</span>
+        :<input type=radio name="barsqfracF" value="[]"></span></td></tr>
+        
+		</table></td>
+		 <td rowspan=2 width=20>
+		   
+		     <button type="button"
+           style="background-color:transparent;border:0px;"
+             onMouseOver="getElementById('upBTN').style.borderStyle='inset';this.style.cursor='pointer'" 
+             onMouseDown="getElementById('upBTN').style.borderStyle='outset'"
+             onMouseUp=  "getElementById('upBTN').style.borderStyle='double'"
+             onMouseOut= "getElementById('upBTN').style.borderStyle='double'"
+           onClick="this.style.cursor='wait';outF='fracF';doDecToFrac('fracF');this.style.cursor='default';"
+       >
+      <img src="../images/upblk.gif" id="upBTN" class=radixFractSTYL  
+             style="border:3px double black;"  width=20 height=20 alt="Decimal -> Fraction">
+      </button>  
+
+       </td>
+</tr>
+</table>
+</div>
+<p>
+R E S U L T S 
+
+<button type=button class=clear   
+       onMouseOver="this.style.cursor='pointer';this.style.backgroundColor='black'" 
+       onMouseOut="this.style.cursor='default';this.style.backgroundColor='#CCC'"
+       onClick="outF='fracF';clearmsg('fracF')">&nbsp;Clear&nbsp;</button>
+
+    
+<br clear=all>    
+
+<table cellpadding=0 cellspacing=0 >
+	<tr>
+	<td valign=bottom style="width:12px">
+	   <button type=button style="padding:0px;margin:0px"
+			onClick="showMoreOrLess('msgfracF',-15)"  class=calcinner >
+			<img src="../images/upwedge.gif" width=10 height=10 alt="less space" 
+			   id="msgfracFless" style="opacity:0.2"
+			   >
+			</button><br>
+	<button type=button onClick="showMoreOrLess('msgfracF', 15)" class=calcinner style="padding:0px;margin:0px">
+	<img src="../images/downwedge.gif" width=10 height=10 alt="more space" ></button>
+	</td>
+	<td style="width:100%">
+	<div id="msgfracF" class="res ttblue" style="height:15em;width:100%;"></div>
+	</td></tr>
+</table>
+
+
+</form>
+
+</div>
+
+<hr>
+
+<small>
+
+<input type=button class=showhidebtn id="historyBTN" 
+    value="Show version history" onClick="showhideIdBTN('historyDIV','historyBTN')">
+</small>
+
+<div id="historyDIV" class=hiddeninfo>
+
+<ul>
+<li> 2014 March 24: version 2.6 The Fractions and Decimals introductory page is now back online.</li>
+<li> 2013 April 22: version 2.5 <br>
+  The proper fraction is now converted into the base.
+<li>2013 March 25: version 2.4 <br>
+   The conversions now fill in the boxes with the converted values.<br>
+   The fixed digits of a fraction are now always shown in full.
+   However, because recurring parts can be many millions  of places long,
+    only a number of "outer" digits - the first few and the last few - of the recurring part of long periods are shown. <br>
+    You can change the number of
+    "outer" digits (the first few and the last few of the repeating part) to be displayed from 20  to any other value.
+<li>2013 March 17: version 2.3 simpler layout with arrow buttons to display better on smart phones or tablets.</li>
+<li>2013 March 16: version 2.2  all input fields can now evaluate an expression using numbers + - * and /<br>
+   removed bug when converting  some fractions to decimals in some bases other than 10; 
+   new colour scheme;</li>
+<li>2013 March 7: version 2.1 now correctly handles fractions bigger than 1.</li>
+<li>2013 March 5: version 2 includes bases other than 10, new layout.</li>
+<li>2006 June 2: first version</li>
+</ul>
+
+</div>
+
+<hr>
+
+<address>
+
+<a href="copyright.html">&copy;</a> 2006-2014 <a href="../contactron.html">Dr Ron Knott</a> 
+&nbsp;&nbsp;&nbsp; updated: 10 September 2014
+&nbsp;&nbsp;<sub><img src="../images/enquiryemail.gif" width=205 height=13 alt=""></sub>
+<br>
+<a href="http://validator.w3.org/check/referer"><img border="0"
+          src="../images/valid-html401.gif" align=right
+          alt="Valid HTML 4.01!" height="31" width="88"></a> 
+
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+        <img style="border:0;width:88px;height:31px" align=right
+            src="../images/vcss.gif"
+            alt="Valid CSS!" >
+    </a>
+
+</address>
+</body>
+</html>
